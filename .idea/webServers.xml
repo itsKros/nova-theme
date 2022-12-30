@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="99edcd8d-9c39-4b6c-8f87-18d4868a99d7" name="Ssq Hostinger" url="http://82.180.170.77">
+        <fileTransfer rootFolder="/domains/ssquarestech.com/public_html/novalanding/" host="82.180.170.77" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

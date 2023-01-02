@@ -21,7 +21,7 @@
 						
 							<?php
 							/* translators: 1: Theme name, 2: Theme author. */
-							printf( esc_html__( '&copy; Copyright '.date( "Y").' %1$s. All rights reserved.', 'nova-theme' ), 'Nova Theme');
+							printf( esc_html( '.All rights reserved. %1$s Copyright &copy;', 'nova-theme' ), 'Nova Theme');
 							?>
 					</div><!-- .site-info -->
 				</div>

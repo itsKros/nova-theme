@@ -55,7 +55,7 @@ function nova_theme_setup() {
 
 	/*Navigation Menus*/
 	function register_nova_menu() {
-		register_nav_menu('header-menu',__( 'Header Menu' ));
+		register_nav_menu('header-menu',__( 'Header Menu', 'nova-theme' ));
 	}
 	add_action( 'init', 'register_nova_menu' );
 

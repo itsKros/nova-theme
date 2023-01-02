@@ -354,7 +354,7 @@ if ( ! class_exists( 'WP_Bootstrap_Navwalker' ) ) :
 			$class            = $args['menu_class'] ? ' class="menu-fallback-menu ' . esc_attr( $args['menu_class'] ) . '"' : ' class="menu-fallback-menu"';
 			$id               = $args['menu_id'] ? ' id="' . esc_attr( $args['menu_id'] ) . '"' : '';
 			$fallback_output .= '<ul' . $id . $class . '>';
-			$fallback_output .= '<li class="nav-item"><a href="' . esc_url( admin_url( 'nav-menus.php' ) ) . '" class="nav-link" title="' . esc_attr__( 'Add a menu', 'wp-bootstrap-navwalker' ) . '">' . esc_html__( 'Add a menu', 'wp-bootstrap-navwalker' ) . '</a></li>';
+			$fallback_output .= '<li class="nav-item"><a href="' . esc_url( admin_url( 'nav-menus.php' ) ) . '" class="nav-link" title="' . esc_attr( 'Add a menu', 'nova-theme' ) . '">' . esc_html( 'Add a menu', 'nova-theme' ) . '</a></li>';
 			$fallback_output .= '</ul>';
 
 			// Menu container closing tag.
@@ -365,7 +365,7 @@ if ( ! class_exists( 'WP_Bootstrap_Navwalker' ) ) :
 			// if $args has 'echo' key and it's true echo, otherwise return.
 			if ( array_key_exists( 'echo', $args ) && $args['echo'] ) {
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				echo $fallback_output;
+				echo esc_attr($fallback_output, 'nova-theme');
 			} else {
 				return $fallback_output;
 			}

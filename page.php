@@ -15,24 +15,33 @@
 get_header();
 ?>
 
-	<main id="primary" class="container">
+<div class="container py-5">
+	<div class="row">
 
-		<?php
-		while ( have_posts() ) :
-			the_post();
+		<div class="col-md-9 main"> 
+			
+			<main id="primary">
 
-			get_template_part( 'template-parts/content', 'page' );
+				<?php
+				while ( have_posts() ) :
+					the_post();
 
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
+					get_template_part( 'template-parts/content', 'page' );
 
-		endwhile; // End of the loop.
-		?>
+					// If comments are open or we have at least one comment, load up the comment template.
+					if ( comments_open() || get_comments_number() ) :
+						comments_template();
+					endif;
 
-	</main><!-- #main -->
+				endwhile; // End of the loop.
+				?>
 
-<?php
-get_sidebar();
-get_footer();
+			</main><!-- #main -->
+		</div><!-- .col-md-9 -->
+
+		<div class="col-md-3 sidebar">
+			<?php get_sidebar(); ?>
+		</div><!-- .col-md-3 .sidebar-->
+	</div> <!-- .row -->
+</div> <!-- .contianer -->
+<?php get_footer(); 

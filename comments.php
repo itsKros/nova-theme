@@ -32,8 +32,7 @@ if ( post_password_required() ) {
 			if ( '1' === $nova_theme_comment_count ) {
 				printf(
 					/* translators: 1: title. */
-					esc_html__( 'One thought on &ldquo;%1$s&rdquo;', 'nova-theme' ),
-					'<span>' . wp_kses_post( get_the_title() ) . '</span>'
+					esc_html__( 'Leave comments', 'nova-theme' )
 				);
 			} else {
 				printf( 

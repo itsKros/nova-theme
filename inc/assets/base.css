@@ -544,19 +544,19 @@ input[type="button"],
 input[type="reset"],
 input[type="submit"] {
 	border: 1px solid;
-	border-color: #ccc #ccc #bbb;
-	border-radius: 3px;
-	background: #e6e6e6;
-	color: rgba(0, 0, 0, 0.8);
-	line-height: 1;
-	padding: 0.6em 1em 0.4em;
+    border-color: #026eb3;
+    border-radius: 3px;
+    background: #026eb3;
+    color: #ffff;
+    line-height: 1;
+    padding: 0.6em 1em 0.6em;
 }
 
 button:hover,
 input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover {
-	border-color: #ccc #bbb #aaa;
+	border-color: #026eb3;
 }
 
 button:active,
@@ -567,7 +567,7 @@ input[type="reset"]:active,
 input[type="reset"]:focus,
 input[type="submit"]:active,
 input[type="submit"]:focus {
-	border-color: #aaa #bbb #bbb;
+	border-color: #026eb3;
 }
 
 input[type="text"],
@@ -956,8 +956,25 @@ textarea {
 	margin-right: auto;
 	margin-bottom: 1.5em;
 }
+
+
+
+
+.single-post .post {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #e4e4e4;
+    padding: 0 0 25px;
+}
+
+
 a.navbar-brand {
     width: 15%;
+}
+
+
+.wp-block-search__inside-wrapper {
+    gap: 0 5px;
 }
 
 footer.entry-footer {

@@ -48,7 +48,7 @@
 }
 
 :root {
-	--nt-blue: #026eb3;
+	--nt-blue: #03a9f4;
 	--nt-green: #7ccb61;
 }
 
@@ -544,9 +544,9 @@ input[type="button"],
 input[type="reset"],
 input[type="submit"] {
 	border: 1px solid;
-    border-color: #026eb3;
+    border-color: var(--nt-blue);
     border-radius: 3px;
-    background: #026eb3;
+    background: var(--nt-blue);
     color: #ffff;
     line-height: 1;
     padding: 0.6em 1em 0.6em;
@@ -556,7 +556,7 @@ button:hover,
 input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover {
-	border-color: #026eb3;
+	border-color: var(--nt-blue);
 }
 
 button:active,
@@ -567,7 +567,7 @@ input[type="reset"]:active,
 input[type="reset"]:focus,
 input[type="submit"]:active,
 input[type="submit"]:focus {
-	border-color: #026eb3;
+	border-color: var(--nt-blue);
 }
 
 input[type="text"],

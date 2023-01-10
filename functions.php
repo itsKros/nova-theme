@@ -171,7 +171,16 @@ function nova_theme_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'nova_theme_scripts' );
 
+/**
+ * Required Plugin
+ */
+require get_template_directory() . '/inc/tgmp/required-plugins.php';
 
+
+/**
+ * Required Plugin
+ */
+require get_template_directory() . '/inc/layout/layout.php';
 
 /**
  * Implement the Custom Header feature.

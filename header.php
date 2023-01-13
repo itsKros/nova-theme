@@ -38,6 +38,7 @@
 				</button>
 
 				<?php
+				if ( has_nav_menu( 'header-menu' ) ) {
 					wp_nav_menu( array(
 						'theme_location'    => 'header-menu',
 						'depth'             => 2,
@@ -45,11 +46,12 @@
 						'container_class'   => 'collapse navbar-collapse',
 						'container_id'      => 'navbarNav',
 						'menu_class'        => 'navbar-nav',
-									'link_before'    => '<span>',
-									'link_after'     => '</span>',
+						'link_before'    	=> '<span>',
+						'link_after'     	=> '</span>',
 						'fallback_cb'       => 'WP_Bootstrap_Navwalker::fallback',
 						'walker'            => new WP_Bootstrap_Navwalker(),
 					) );
+				}
 				?>
 				
 			</div> <!-- #main-menu > .container-fluid-->

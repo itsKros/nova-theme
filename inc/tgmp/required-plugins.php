@@ -105,7 +105,27 @@ function nova_theme_register_required_plugins() {
 			'name'      => 'One Click Demo Import',
 			'slug'      => 'one-click-demo-import',
 			'required'  => true,
+		),
+
+		array(
+			'name'      => 'Customizer Export/Import',
+			'slug'      => 'customizer-export-import',
+			'required'  => true,
+		),
+
+		array(
+			'name'      => 'Fullwidth Page Templates',
+			'slug'      => 'fullwidth-templates',
+			'required'  => true,
+		),
+
+		array(
+			'name'      => 'Style Kits – Advanced Theme Styles for Elementor',
+			'slug'      => 'analogwp-templates',
+			'required'  => true,
 		)
+
+		
 
 	);
 

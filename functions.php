@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Nova Theme functions and definitions
  *
@@ -7,9 +8,186 @@
  * @package Nova_Theme
  */
 
+require_once get_template_directory() . '/inc/NovaThemeBase.php';
+
+
+
+class NovaTheme {
+	public $plugin_file=__FILE__;
+	public $responseObj;
+	public $licenseMessage;
+	public $showMessage=false;
+	public $slug="nova-theme";
+	function __construct() {
+		add_action( 'admin_print_styles', [ $this, 'SetAdminStyle' ] );
+		$licenseKey=get_option("NovaTheme_lic_Key","");
+		$liceEmail=get_option( "NovaTheme_lic_email","");
+		$templateDir=get_stylesheet_directory(); //or dirname(__FILE__);
+		if(NovaThemeBase::CheckWPPlugin($licenseKey,$liceEmail,$this->licenseMessage,$this->responseObj,$templateDir."/style.css")){
+			add_action( 'admin_menu', [$this,'ActiveAdminMenu'],99999);
+			add_action( 'admin_post_NovaTheme_el_deactivate_license', [ $this, 'action_deactivate_license' ] );
+			//$this->licenselMessage=$this->mess;
+			require get_template_directory() . '/inc/tgmp/required-plugins.php';
+            require get_template_directory() . '/inc/layout/layout.php';
+        }else{
+			if(!empty($licenseKey) && !empty($this->licenseMessage)){
+				$this->showMessage=true;
+			}
+			update_option("NovaTheme_lic_Key","") || add_option("NovaTheme_lic_Key","");
+			add_action( 'admin_post_NovaTheme_el_activate_license', [ $this, 'action_activate_license' ] );
+			add_action( 'admin_menu', [$this,'InactiveMenu']);
+		}
+        }
+	function SetAdminStyle() {
+		wp_register_style( "NovaThemeLic", get_theme_file_uri("_lic_style.css"),10);
+		wp_enqueue_style( "NovaThemeLic" );
+	}
+	function ActiveAdminMenu(){
+		 
+		add_menu_page (  "NovaTheme", "Nova Theme", "activate_plugins", $this->slug, [$this,"Activated"], " dashicons-star-filled ");
+		//add_submenu_page(  $this->slug, "NovaTheme License", "License Info", "activate_plugins",  $this->slug."_license", [$this,"Activated"] );
+
+	}
+	function InactiveMenu() {
+		add_menu_page( "NovaTheme", "Nova Theme", 'activate_plugins', $this->slug,  [$this,"LicenseForm"], " dashicons-star-filled " );
+		
+	}
+	function action_activate_license(){
+		check_admin_referer( 'el-license' );
+		$licenseKey=!empty($_POST['el_license_key'])?$_POST['el_license_key']:"";
+		$licenseEmail=!empty($_POST['el_license_email'])?$_POST['el_license_email']:"";
+		update_option("NovaTheme_lic_Key",$licenseKey) || add_option("NovaTheme_lic_Key",$licenseKey);
+		update_option("NovaTheme_lic_email",$licenseEmail) || add_option("NovaTheme_lic_email",$licenseEmail);
+		update_option('_site_transient_update_themes','');
+		wp_safe_redirect(admin_url( 'admin.php?page='.$this->slug));
+	}
+	function action_deactivate_license() {
+		check_admin_referer( 'el-license' );
+		$message="";
+		if(NovaThemeBase::RemoveLicenseKey(__FILE__,$message)){
+			update_option("NovaTheme_lic_Key","") || add_option("NovaTheme_lic_Key","");
+			update_option('_site_transient_update_themes','');
+		}
+    	wp_safe_redirect(admin_url( 'admin.php?page='.$this->slug));
+    }
+	function Activated(){
+		?>
+        <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+            <input type="hidden" name="action" value="NovaTheme_el_deactivate_license"/>
+            <div class="el-license-container">
+                <h3 class="el-license-title"><i class="dashicons-before dashicons-star-filled"></i> <?php _e("Nova Theme License Info",$this->slug);?> </h3>
+                <hr>
+                <ul class="el-license-info">
+                <li>
+                    <div>
+                        <span class="el-license-info-title"><?php _e("Status",$this->slug);?></span>
+
+                        <?php if ( $this->responseObj->is_valid ) : ?>
+                            <span class="el-license-valid"><?php _e("Valid",$this->slug);?></span>
+                        <?php else : ?>
+                            <span class="el-license-valid"><?php _e("Invalid",$this->slug);?></span>
+                        <?php endif; ?>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <span class="el-license-info-title"><?php _e("License Type",$this->slug);?></span>
+                        <?php echo $this->responseObj->license_title; ?>
+                    </div>
+                </li>
+
+               <li>
+                   <div>
+                       <span class="el-license-info-title"><?php _e("License Expired on",$this->slug);?></span>
+                       <?php echo $this->responseObj->expire_date;
+                       if(!empty($this->responseObj->expire_renew_link)){
+                           ?>
+                           <a target="_blank" class="el-blue-btn" href="<?php echo $this->responseObj->expire_renew_link; ?>">Renew</a>
+                           <?php
+                       }
+                       ?>
+                   </div>
+               </li>
+
+               <li>
+                   <div>
+                       <span class="el-license-info-title"><?php _e("Support Expired on",$this->slug);?></span>
+                       <?php
+                           echo $this->responseObj->support_end;
+                        if(!empty($this->responseObj->support_renew_link)){
+                            ?>
+                               <a target="_blank" class="el-blue-btn" href="<?php echo $this->responseObj->support_renew_link; ?>">Renew</a>
+                            <?php
+                        }
+                       ?>
+                   </div>
+               </li>
+                <li>
+                    <div>
+                        <span class="el-license-info-title"><?php _e("Your License Key",$this->slug);?></span>
+                        <span class="el-license-key"><?php echo esc_attr( substr($this->responseObj->license_key,0,9)."XXXXXXXX-XXXXXXXX".substr($this->responseObj->license_key,-9) ); ?></span>
+                    </div>
+                </li>
+                </ul>
+                <div class="el-license-active-btn">
+                    <?php wp_nonce_field( 'el-license' ); ?>
+                    <?php submit_button('Deactivate'); ?>
+                </div>
+            </div>
+        </form>
+		<?php
+	}
+	
+	function LicenseForm() {
+		?>
+        <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+            <input type="hidden" name="action" value="NovaTheme_el_activate_license"/>
+            <div class="el-license-container">
+                <h3 class="el-license-title"><i class="dashicons-before dashicons-star-filled"></i> <?php _e("Nova Theme Theme Licensing",$this->slug);?></h3>
+                <hr>
+				<?php
+					if(!empty($this->showMessage) && !empty($this->licenseMessage)){
+						?>
+                        <div class="notice notice-error is-dismissible">
+                            <p><?php echo $this->licenseMessage; ?></p>
+                        </div>
+						<?php
+					}
+				?>
+                <p><?php _e("Enter your license key here, to activate the product, and get full feature updates and premium support.",$this->slug);?></p>
+<ol>
+    <li><?php _e("Please enter your license key.",$this->slug);?></li>
+    <li><?php _e("You will get your license keyfrom your account section in Nova Theme official site",$this->slug);?></li>
+</ol>
+    		    <div class="el-license-field">
+    			    <label for="el_license_key"><?php _e("License code",$this->slug);?></label>
+    			    <input type="text" class="regular-text code" name="el_license_key" size="50" placeholder="xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx" required="required">
+    		    </div>
+                <div class="el-license-field">
+                    <label for="el_license_key"><?php _e("Email Address",$this->slug);?></label>
+                    <?php
+                        $purchaseEmail   = get_option( "NovaTheme_lic_email", get_bloginfo( 'admin_email' ));
+                    ?>
+                    <input type="text" class="regular-text code" name="el_license_email" size="50" value="<?php echo $purchaseEmail; ?>" placeholder="" required="required">
+                    <div><small><?php _e("We will send update news of this product by this email address, don't worry, we hate spam",$this->slug);?></small></div>
+                </div>
+                <div class="el-license-active-btn">
+					<?php wp_nonce_field( 'el-license' ); ?>
+					<?php submit_button('Activate'); ?>
+                </div>
+            </div>
+        </form>
+		<?php
+	}
+}
+
+new NovaTheme();
+
+
 if ( ! defined( '_S_VERSION' ) ) {
-	// Replace the version number of the theme on each release.
-	define( '_S_VERSION', '1.0.0' );
+    // Replace the version number of the theme on each release.
+    define( '_S_VERSION', '1.0.0' );
 }
 
 /**
@@ -20,98 +198,98 @@ if ( ! defined( '_S_VERSION' ) ) {
  * as indicating support for post thumbnails.
  */
 function nova_theme_setup() {
-	/*
-		* Make theme available for translation.
-		* Translations can be filed in the /languages/ directory.
-		* If you're building a theme based on Nova Theme, use a find and replace
-		* to change 'nova-theme' to the name of your theme in all the template files.
-		*/
-	load_theme_textdomain( 'nova-theme', get_template_directory() . '/languages' );
+    /*
+        * Make theme available for translation.
+        * Translations can be filed in the /languages/ directory.
+        * If you're building a theme based on Nova Theme, use a find and replace
+        * to change 'nova-theme' to the name of your theme in all the template files.
+        */
+    load_theme_textdomain( 'nova-theme', get_template_directory() . '/languages' );
 
-	// Add default posts and comments RSS feed links to head.
-	add_theme_support( 'automatic-feed-links' );
+    // Add default posts and comments RSS feed links to head.
+    add_theme_support( 'automatic-feed-links' );
 
-	/*
-		* Let WordPress manage the document title.
-		* By adding theme support, we declare that this theme does not use a
-		* hard-coded <title> tag in the document head, and expect WordPress to
-		* provide it for us.
-		*/
-	add_theme_support( 'title-tag' );
+    /*
+        * Let WordPress manage the document title.
+        * By adding theme support, we declare that this theme does not use a
+        * hard-coded <title> tag in the document head, and expect WordPress to
+        * provide it for us.
+        */
+    add_theme_support( 'title-tag' );
 
-	/*
-		* Enable support for Post Thumbnails on posts and pages.
-		*
-		* @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
-		*/
-	add_theme_support( 'post-thumbnails' );
+    /*
+        * Enable support for Post Thumbnails on posts and pages.
+        *
+        * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
+        */
+    add_theme_support( 'post-thumbnails' );
 
-	// This theme uses wp_nav_menu() in one location.
-	register_nav_menus(
-		array(
-			'menu-1' => esc_html__( 'Primary', 'nova-theme' ),
-		)
-	);
+    // This theme uses wp_nav_menu() in one location.
+    register_nav_menus(
+        array(
+            'menu-1' => esc_html__( 'Primary', 'nova-theme' ),
+        )
+    );
 
-	/*Navigation Menus*/
-	function register_nova_menu() {
-		register_nav_menu('header-menu',__( 'Header Menu', 'nova-theme' ));
-	}
-	add_action( 'init', 'register_nova_menu' );
+    /*Navigation Menus*/
+    function register_nova_menu() {
+        register_nav_menu('header-menu',__( 'Header Menu', 'nova-theme' ));
+    }
+    add_action( 'init', 'register_nova_menu' );
 
-	/**
-	 * Register Custom Navigation Walker
-	 */
-	// Register custom navigation walker
-	require_once('inc/class-wp-bootstrap-navwalker.php');
+    /**
+     * Register Custom Navigation Walker
+     */
+    // Register custom navigation walker
+    require_once('inc/class-wp-bootstrap-navwalker.php');
 
 
-	/*
-		* Switch default core markup for search form, comment form, and comments
-		* to output valid HTML5.
-		*/
-	add_theme_support(
-		'html5',
-		array(
-			'search-form',
-			'comment-form',
-			'comment-list',
-			'gallery',
-			'caption',
-			'style',
-			'script',
-		)
-	);
+    /*
+        * Switch default core markup for search form, comment form, and comments
+        * to output valid HTML5.
+        */
+    add_theme_support(
+        'html5',
+        array(
+            'search-form',
+            'comment-form',
+            'comment-list',
+            'gallery',
+            'caption',
+            'style',
+            'script',
+        )
+    );
 
-	// Set up the WordPress core custom background feature.
-	add_theme_support(
-		'custom-background',
-		apply_filters(
-			'nova_theme_custom_background_args',
-			array(
-				'default-color' => 'ffffff',
-				'default-image' => '',
-			)
-		)
-	);
+    // Set up the WordPress core custom background feature.
+    add_theme_support(
+        'custom-background',
+        apply_filters(
+            'nova_theme_custom_background_args',
+            array(
+                'default-color' => 'ffffff',
+                'default-image' => '',
+            )
+        )
+    );
 
-	// Add theme support for selective refresh for widgets.
-	add_theme_support( 'customize-selective-refresh-widgets' );
+    // Add theme support for selective refresh for widgets.
+    add_theme_support( 'customize-selective-refresh-widgets' );
 
-	/**
-	 * Add support for core custom logo.
-	 *
-	 * @link https://codex.wordpress.org/Theme_Logo
-	 */
-	add_theme_support(
-		'custom-logo',
-		array(
-			'height'      => 250,
-			'width'       => 250,
-			'flex-width'  => true,
-			'flex-height' => true,
-		)
-	);
+    /**
+     * Add support for core custom logo.
+     *
+     * @link https://codex.wordpress.org/Theme_Logo
+     */
+    add_theme_support(
+        'custom-logo',
+        array(
+            'height'      => 250,
+            'width'       => 250,
+            'flex-width'  => true,
+            'flex-height' => true,
+        )
+    );
 }
 add_action( 'after_setup_theme', 'nova_theme_setup' );
 
@@ -123,7 +301,7 @@ add_action( 'after_setup_theme', 'nova_theme_setup' );
  * @global int $content_width
  */
 function nova_theme_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'nova_theme_content_width', 640 );
+    $GLOBALS['content_width'] = apply_filters( 'nova_theme_content_width', 640 );
 }
 add_action( 'after_setup_theme', 'nova_theme_content_width', 0 );
 
@@ -133,17 +311,17 @@ add_action( 'after_setup_theme', 'nova_theme_content_width', 0 );
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
 function nova_theme_widgets_init() {
-	register_sidebar(
-		array(
-			'name'          => esc_html__( 'Sidebar', 'nova-theme' ),
-			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'nova-theme' ),
-			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
-			'before_title'  => '<h2 class="widget-title">',
-			'after_title'   => '</h2>',
-		)
-	);
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Sidebar', 'nova-theme' ),
+            'id'            => 'sidebar-1',
+            'description'   => esc_html__( 'Add widgets here.', 'nova-theme' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
 }
 add_action( 'widgets_init', 'nova_theme_widgets_init' );
 
@@ -151,36 +329,25 @@ add_action( 'widgets_init', 'nova_theme_widgets_init' );
  * Enqueue scripts and styles.
  */
 function nova_theme_scripts() {
-	wp_enqueue_style( 'nova-theme-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( 'nova-theme-style', 'rtl', 'replace' );
-	
-	wp_enqueue_style( 'nova-theme-main-style', get_template_directory_uri() . '/inc/assets/bootstrap.min.css', array(), _S_VERSION );
-	wp_style_add_data( 'nova-theme-main-style', 'rtl', 'replace' );
+    wp_enqueue_style( 'nova-theme-style', get_stylesheet_uri(), array(), _S_VERSION );
+    wp_style_add_data( 'nova-theme-style', 'rtl', 'replace' );
+    
+    wp_enqueue_style( 'nova-theme-main-style', get_template_directory_uri() . '/inc/assets/bootstrap.min.css', array(), _S_VERSION );
+    wp_style_add_data( 'nova-theme-main-style', 'rtl', 'replace' );
 
-	wp_enqueue_style( 'nova-theme-base-style', get_template_directory_uri() . '/inc/assets/base.css', array(), _S_VERSION );
-	wp_style_add_data( 'nova-theme-base-style', 'rtl', 'replace' );
+    wp_enqueue_style( 'nova-theme-base-style', get_template_directory_uri() . '/inc/assets/base.css', array(), _S_VERSION );
+    wp_style_add_data( 'nova-theme-base-style', 'rtl', 'replace' );
 
-	wp_enqueue_script( 'nova-theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'nova-theme-bundle', get_template_directory_uri() . '/js/bootstrap.bundle.min.js', array(), _S_VERSION, false );
+    wp_enqueue_script( 'nova-theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+    wp_enqueue_script( 'nova-theme-bundle', get_template_directory_uri() . '/js/bootstrap.bundle.min.js', array(), _S_VERSION, false );
 
-	
-	
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
+    
+    
+    if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+        wp_enqueue_script( 'comment-reply' );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'nova_theme_scripts' );
-
-/**
- * Required Plugin
- */
-require get_template_directory() . '/inc/tgmp/required-plugins.php';
-
-
-/**
- * Required Plugin
- */
-require get_template_directory() . '/inc/layout/layout.php';
 
 /**
  * Implement the Custom Header feature.
@@ -206,12 +373,12 @@ require get_template_directory() . '/inc/customizer.php';
  * Load Jetpack compatibility file.
  */
 if ( defined( 'JETPACK__VERSION' ) ) {
-	require get_template_directory() . '/inc/jetpack.php';
+    require get_template_directory() . '/inc/jetpack.php';
 }
 
 /**
  * Load WooCommerce compatibility file.
  */
 if ( class_exists( 'WooCommerce' ) ) {
-	require get_template_directory() . '/inc/woocommerce.php';
+    require get_template_directory() . '/inc/woocommerce.php';
 }

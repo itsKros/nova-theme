@@ -10,6 +10,14 @@
 
 require_once get_template_directory() . '/inc/NovaThemeBase.php';
 
+require_once( get_template_directory() . '/inc/framework/redux-framework.php' );
+if ( !class_exists( 'ReduxFramework' ) && file_exists( get_template_directory() . '/inc/framework/redux-core/framework.php' ) ) {
+    require_once( get_template_directory() . '/inc/framework/redux-core/framework.php' );
+}
+if ( !isset( $redux_demo ) && file_exists( get_template_directory() . '/inc/framework/sample/config.php' ) ) {
+    require_once( get_template_directory() . '/inc/framework/sample/config.php' );
+}
+
 
 
 class NovaTheme {
@@ -382,3 +390,7 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 if ( class_exists( 'WooCommerce' ) ) {
     require get_template_directory() . '/inc/woocommerce.php';
 }
+
+
+
+

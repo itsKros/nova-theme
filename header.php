@@ -16,7 +16,10 @@
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
+	<link rel="icon" href="<?php echo get_site_icon_url( 512, esc_url( get_template_directory_uri() ).'/inc/assets/img/favicon.png' ) ?>" sizes="512x512" />
 
+
+	
 	<?php wp_head(); ?>
 </head>
 
@@ -29,9 +32,20 @@
 		<nav id="main-menu" class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container">
 
-				
+			
 				<a class="navbar-brand" href="/">
-					<img src="<?php  echo esc_url( get_template_directory_uri() );?>/inc/assets/img/logo.png" alt="Nova Theme" title="Nova Theme">
+					<?php 
+						$custom_logo_id = get_theme_mod( 'custom_logo' );
+						$custom_logo_data = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+						$custom_logo_url = $custom_logo_data[0]; 
+					?>
+
+					<?php if( has_custom_logo() ):  ?>
+						<img src="<?= $custom_logo_url ?>" alt="<?php bloginfo( 'name' ); ?>" title="<?php bloginfo( 'name' ); ?>">
+					<?php else: ?>
+						<img src="<?php echo esc_url( get_template_directory_uri() );?>/inc/assets/img/logo.png" alt="<?php bloginfo( 'name' ); ?>" title="<?php bloginfo( 'name' ); ?>">
+					<?php endif; ?>
+					
 				</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>

@@ -18,7 +18,10 @@ if ( !isset( $redux_demo ) && file_exists( get_template_directory() . '/inc/fram
     require_once( get_template_directory() . '/inc/framework/sample/config.php' );
 }
 
-
+function um_remove_custom_css(){
+    remove_action( 'wp_head' , 'nova_theme-dynamic-css' );
+}
+add_action( 'wp_head' , 'um_remove_custom_css' , 1 );
 
 class NovaTheme {
 	public $plugin_file=__FILE__;

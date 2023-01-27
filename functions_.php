@@ -20,12 +20,14 @@ if ( ! defined( '_S_VERSION' ) ) {
  * as indicating support for post thumbnails.
  */
 function nova_theme_setup() {
+
 	/*
-		* Make theme available for translation.
-		* Translations can be filed in the /languages/ directory.
-		* If you're building a theme based on Nova Theme, use a find and replace
-		* to change 'nova-theme' to the name of your theme in all the template files.
-		*/
+	* Make theme available for translation.
+	* Translations can be filed in the /languages/ directory.
+	* If you're building a theme based on Nova Theme, use a find and replace
+	* to change 'nova-theme' to the name of your theme in all the template files.
+	*/
+
 	load_theme_textdomain( 'nova-theme', get_template_directory() . '/languages' );
 
 	// Add default posts and comments RSS feed links to head.
@@ -36,7 +38,7 @@ function nova_theme_setup() {
 		* By adding theme support, we declare that this theme does not use a
 		* hard-coded <title> tag in the document head, and expect WordPress to
 		* provide it for us.
-		*/
+	*/
 	add_theme_support( 'title-tag' );
 
 	/*

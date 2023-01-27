@@ -30,9 +30,51 @@ function nova_theme_customize_register( $wp_customize ) {
 				'render_callback' => 'nova_theme_customize_partial_blogdescription',
 			)
 		);
+
+
+
+		
 	}
+
+
+	
+
+
 }
 add_action( 'customize_register', 'nova_theme_customize_register' );
+
+
+function nt__customize_register( $wp_customize ) {
+
+	// Create our panels
+	
+	$wp_customize->add_panel( 'additional_code', array(
+		'priority'       => 100,
+		'title'          => __('Additional Code', 'nova_theme'),
+	) );
+			
+	// Create our sections
+	
+	$wp_customize->add_section( 'custom_js_section' , array(
+		'title'             => __('Custom JavaScript', 'nova_theme'),
+		'priority'          => 1,
+		'panel'             => 'additional_code',
+	) );
+			
+	// Create our settings
+	
+	$wp_customize->add_setting( 'custom_js' , array(
+		'type'          => 'theme_mod',
+		'transport'     => 'refresh',
+	) );
+	$wp_customize->add_control( 'custom_js_control', array(
+		'section'    => 'custom_js_section',
+		'settings'   => 'custom_js',
+		'type'       => 'code',
+	) );
+			
+	}
+	add_action( 'customize_register', 'nt__customize_register' );
 
 /**
  * Render the site title for the selective refresh partial.

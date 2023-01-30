@@ -1039,6 +1039,7 @@ aside#secondary {
     border: 1px solid #d8d8d8;
     border-radius: 2px;
 }
+
 .nt-product .onsale {
     position: absolute;
     background: var(--nt-blue);
@@ -1049,12 +1050,12 @@ aside#secondary {
     top: 10px;
 }
 
-.nt-product h2.woocommerce-loop-product__title {
-    font-size: 15px;
-    color: #414141;
-    margin-top: 10px;
-}
 
+.nt-product .woocommerce-loop-product__title {
+    font-size: 15px;
+    color: #000;
+    margin-top: 15px;
+}
 
 .nt-product span.price {
     display: block;
@@ -1069,7 +1070,6 @@ aside#secondary {
     padding: 10px 15px;
     border-radius: 3px;
 }
-
 
 @media only screen and (max-width:767px){
 	a.navbar-brand {

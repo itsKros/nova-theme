@@ -1070,6 +1070,14 @@ aside#secondary {
     border-radius: 3px;
 }
 
+.shop-loop ul.page-numbers {
+    display: flex;
+    list-style: none;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+
 
 @media only screen and (max-width:767px){
 	a.navbar-brand {

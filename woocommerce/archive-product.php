@@ -29,32 +29,32 @@ get_header( 'shop' );
 ?>
 
 <div class="shop-header">
-<div class="container">
-	<div class="row">
-		<div class="col-md-12 text-center"><?php do_action( 'woocommerce_before_main_content' ); ?></div>
-	</div>
-</div>
-
-<header class="woocommerce-products-header">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12 text-center">
-				<?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
-					<h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
-				<?php endif; ?>
-				<?php
-					/**
-					 * Hook: woocommerce_archive_description.
-					 *
-					 * @hooked woocommerce_taxonomy_archive_description - 10
-					 * @hooked woocommerce_product_archive_description - 10
-					 */
-					do_action( 'woocommerce_archive_description' );
-				?>
-			</div>
+			<div class="col-md-12 text-center"><?php do_action( 'woocommerce_before_main_content' ); ?></div>
 		</div>
 	</div>
-</header>
+
+	<header class="woocommerce-products-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
+						<h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
+					<?php endif; ?>
+					<?php
+						/**
+						 * Hook: woocommerce_archive_description.
+						 *
+						 * @hooked woocommerce_taxonomy_archive_description - 10
+						 * @hooked woocommerce_product_archive_description - 10
+						 */
+						do_action( 'woocommerce_archive_description' );
+					?>
+				</div>
+			</div>
+		</div>
+	</header>
 <?php
 if ( woocommerce_product_loop() ) {
 
@@ -125,7 +125,7 @@ if ( woocommerce_product_loop() ) {
 			?>
 
 		</div>
-		<div class="col-md-3 shop-side">
+		<div class="col-md-3 sidebar shop-side">
 
 			<?php
 				/**
@@ -133,8 +133,15 @@ if ( woocommerce_product_loop() ) {
 				 *
 				 * @hooked woocommerce_get_sidebar - 10
 				 */
-				do_action( 'woocommerce_sidebar' );
+				
+				// do_action( 'woocommerce_sidebar' );
 			?>
+
+			<?php if( is_active_sidebar( 'shop-sidebar' ) ) : ?>
+				<aside id="secondary" class="widget-area">
+					<?php dynamic_sidebar( 'shop-sidebar' ); ?>
+				</aside>
+			<?php endif; ?>
 
 		</div>
 	</div>

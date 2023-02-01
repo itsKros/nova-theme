@@ -21,40 +21,64 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header( 'shop' ); ?>
 
-	<?php
-		/**
-		 * woocommerce_before_main_content hook.
-		 *
-		 * @hooked woocommerce_output_content_wrapper - 10 (outputs opening divs for the content)
-		 * @hooked woocommerce_breadcrumb - 20
-		 */
-		do_action( 'woocommerce_before_main_content' );
-	?>
+<div class="shop-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<?php
+					/**
+					 * woocommerce_before_main_content hook.
+					 *
+					 * @hooked woocommerce_output_content_wrapper - 10 (outputs opening divs for the content)
+					 * @hooked woocommerce_breadcrumb - 20
+					 */
+					
+					do_action( 'woocommerce_before_main_content' );
+				?>
+			</div>
+		</div>
+	</div>
+</div> <!-- .shop-loop -->
 
-		<?php while ( have_posts() ) : ?>
-			<?php the_post(); ?>
+<div class="nt-single-product">
+	<div class="container py-5">
+		<div class="row">
+			<div class="col-md-9 shop-loop">
+				<?php while ( have_posts() ) : ?>
+					<?php the_post(); ?>
+					<?php wc_get_template_part( 'content', 'single-product' ); ?>
+				<?php endwhile; // end of the loop. ?>
 
-			<?php wc_get_template_part( 'content', 'single-product' ); ?>
+				<?php
+					/**
+					 * woocommerce_after_main_content hook.
+					 *
+					 * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing divs for the content)
+					 */
+					
+					do_action( 'woocommerce_after_main_content' );
+					
+				?>
+			</div>
 
-		<?php endwhile; // end of the loop. ?>
-
-	<?php
-		/**
-		 * woocommerce_after_main_content hook.
-		 *
-		 * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing divs for the content)
-		 */
-		do_action( 'woocommerce_after_main_content' );
-	?>
-
-	<?php
-		/**
-		 * woocommerce_sidebar hook.
-		 *
-		 * @hooked woocommerce_get_sidebar - 10
-		 */
-		do_action( 'woocommerce_sidebar' );
-	?>
+			<div class="col-md-3 sidebar shop-side">
+				<?php
+					/**
+					 * woocommerce_sidebar hook.
+					 *
+					 * @hooked woocommerce_get_sidebar - 10
+					 */
+					// do_action( 'woocommerce_sidebar' );
+				?>
+				<?php if( is_active_sidebar( 'shop-sidebar' ) ) : ?>
+					<aside id="secondary" class="widget-area">
+						<?php dynamic_sidebar( 'shop-sidebar' ); ?>
+					</aside>
+				<?php endif; ?>
+			</div>
+		</div><!-- .row -->
+	</div><!-- .container -->
+</div> <!-- .nt-single-product -->
 
 <?php
 get_footer( 'shop' );

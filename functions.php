@@ -348,6 +348,7 @@ function nova_theme_widgets_init() {
 }
 add_action( 'widgets_init', 'nova_theme_widgets_init' );
 
+
 /**
  * Enqueue scripts and styles.
  */
@@ -371,6 +372,25 @@ function nova_theme_scripts() {
     }
 }
 add_action( 'wp_enqueue_scripts', 'nova_theme_scripts' );
+
+
+
+// add bootstrap classes to checkout page
+add_filter('woocommerce_checkout_fields', 'addBootstrapToCheckoutFields' );
+function addBootstrapToCheckoutFields($fields) {
+    foreach ($fields as &$fieldset) {
+        foreach ($fieldset as &$field) {
+            // if you want to add the form-group class around the label and the input
+            $field['class'][] = 'form-group'; 
+
+            // add form-control to the actual input
+            $field['input_class'][] = 'form-control';
+        }
+    }
+    return $fields;
+}
+
+
 
 /**
  * Implement the Custom Header feature.
@@ -406,6 +426,9 @@ if ( class_exists( 'WooCommerce' ) ) {
     require get_template_directory() . '/inc/woocommerce.php';
 }
 
-
+function nt_add_woocommerce_support() {
+    add_theme_support( 'woocommerce' );
+}
+add_action( 'after_setup_theme', 'nt_add_woocommerce_support' );
 
 

@@ -958,7 +958,14 @@ textarea {
 }
 
 
-
+.size-auto, 
+.size-full,
+.size-large,
+.size-medium,
+.size-thumbnail {
+	max-width: 100%;
+	height: auto;
+}
 
 .single-post .post {
     background: transparent;
@@ -1271,6 +1278,19 @@ table.shop_table_responsive tr td .coupon {
 
 .woocommerce-form-login label.woocommerce-form__label.woocommerce-form__label-for-checkbox.woocommerce-form-login__rememberme {
    margin-top: 12px;
+}
+
+div#customer_login {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+p.woocommerce-form-row.woocommerce-form-row--wide.form-row.form-row-wide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+p.woocommerce-form-row.woocommerce-form-row--wide.form-row.form-row-wide input {
+    width: 100%;
 }
 
 @media (min-width: 768px){

@@ -66,14 +66,18 @@ function nova_theme_register_required_plugins() {
 		),
 
 		array(
-			'name'      => 'Contact Form 7',
-			'slug'      => 'contact-form-7',
-			'required'  => true,
+			'name'               => 'Elementor Pro',
+			'slug'               => 'elementor-pro',
+			'source'             => get_stylesheet_directory() . '/inc/lib/plugins/elementor-pro.zip', 
+			'required'           => true,
+			'version'            => '3.11.2',
+			'force_activation'   => false,
+			'force_deactivation' => false,
 		),
 
 		array(
-			'name'      => 'WooCommerce',
-			'slug'      => 'woocommerce',
+			'name'      => 'Contact Form 7',
+			'slug'      => 'contact-form-7',
 			'required'  => true,
 		),
 

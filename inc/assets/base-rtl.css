@@ -1,3 +1,27 @@
+/*!
+Theme Name: Nova Theme
+Theme URI: https://underscores.me/
+Author: Automattic
+Author URI: https://automattic.com/
+Description: Hi. I'm a starter theme called <code>Nova Theme</code>, or <em>underscores</em>, if you like. I'm a theme meant for hacking so don't use me as a <em>Parent Theme</em>. Instead try turning me into the next, most awesome, WordPress theme out there. That's what I'm here for.
+Version: 1.0.0
+Tested up to: 5.4
+Requires PHP: 5.6
+License: GNU General Public License v2 or later
+License URI: LICENSE
+Text Domain: Nova Theme
+Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned.
+
+Nova Theme is based on Underscores https://underscores.me/, (C) 2012-2020 Automattic, Inc.
+Underscores is distributed under the terms of the GNU GPL v2 or later.
+
+Normalizing styles have been helped along thanks to the fine work of
+Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
+*/
+
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
@@ -45,11 +69,6 @@
  html {
 	line-height: 1.15;
 	-webkit-text-size-adjust: 100%;
-}
-
-:root {
-	--nt-blue: #03a9f4;
-	--nt-green: #7ccb61;
 }
 
 /* Sections
@@ -106,9 +125,8 @@ pre {
 /**
  * Remove the gray background on active links in IE 10.
  */
- a {
-    background-color: transparent;
-    text-decoration: none;
+a {
+	background-color: transparent;
 }
 
 /**
@@ -466,11 +484,11 @@ hr {
 
 ul,
 ol {
-	margin: 0 0 1.5em 3em;
+	margin: 0 3em 1.5em 0;
 }
 
 ul {
-	list-style: none;
+	list-style: disc;
 }
 
 ol {
@@ -480,7 +498,7 @@ ol {
 li > ul,
 li > ol {
 	margin-bottom: 0;
-	margin-left: 1.5em;
+	margin-right: 1.5em;
 }
 
 dt {
@@ -515,17 +533,17 @@ table {
 /* Links
 --------------------------------------------- */
 a {
-	color: var(--nt-blue);
+	color: #4169e1;
 }
 
 a:visited {
-	color: var(--nt-blue);
+	color: #800080;
 }
 
 a:hover,
 a:focus,
 a:active {
-	color: var(--nt-blue);
+	color: #191970;
 }
 
 a:focus {
@@ -544,19 +562,19 @@ input[type="button"],
 input[type="reset"],
 input[type="submit"] {
 	border: 1px solid;
-    border-color: var(--nt-blue);
-    border-radius: 3px;
-    background: var(--nt-blue);
-    color: #ffff;
-    line-height: 1;
-    padding: 0.6em 1em 0.6em;
+	border-color: #ccc #ccc #bbb;
+	border-radius: 3px;
+	background: #e6e6e6;
+	color: rgba(0, 0, 0, 0.8);
+	line-height: 1;
+	padding: 0.6em 1em 0.4em;
 }
 
 button:hover,
 input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover {
-	border-color: var(--nt-blue);
+	border-color: #ccc #bbb #aaa;
 }
 
 button:active,
@@ -567,7 +585,7 @@ input[type="reset"]:active,
 input[type="reset"]:focus,
 input[type="submit"]:active,
 input[type="submit"]:focus {
-	border-color: var(--nt-blue);
+	border-color: #aaa #bbb #bbb;
 }
 
 input[type="text"],
@@ -638,27 +656,27 @@ textarea {
 	display: none;
 	list-style: none;
 	margin: 0;
-	padding-left: 0;
+	padding-right: 0;
 }
 
 .main-navigation ul ul {
 	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
-	float: left;
+	float: right;
 	position: absolute;
 	top: 100%;
-	left: -999em;
+	right: -999em;
 	z-index: 99999;
 }
 
 .main-navigation ul ul ul {
-	left: -999em;
+	right: -999em;
 	top: 0;
 }
 
 .main-navigation ul ul li:hover > ul,
 .main-navigation ul ul li.focus > ul {
 	display: block;
-	left: auto;
+	right: auto;
 }
 
 .main-navigation ul ul a {
@@ -667,7 +685,7 @@ textarea {
 
 .main-navigation ul li:hover > ul,
 .main-navigation ul li.focus > ul {
-	left: auto;
+	right: auto;
 }
 
 .main-navigation li {
@@ -732,13 +750,6 @@ textarea {
 .post,
 .page {
 	margin: 0 0 1.5em;
-	/* text-align: right; */
-}
-
-.post {
-    background: #f8f9fa;
-    padding: 25px;
-    border: 1px solid #e4e4e4;
 }
 
 .updated:not(.published) {
@@ -801,8 +812,8 @@ textarea {
 
 .wp-caption img[class*="wp-image-"] {
 	display: block;
-	margin-left: auto;
 	margin-right: auto;
+	margin-left: auto;
 }
 
 .wp-caption .wp-caption-text {
@@ -913,7 +924,7 @@ textarea {
 	font-size: 0.875rem;
 	font-weight: 700;
 	height: auto;
-	left: 5px;
+	right: 5px;
 	line-height: normal;
 	padding: 15px 23px 14px;
 	text-decoration: none;
@@ -930,21 +941,13 @@ textarea {
 /* Alignments
 --------------------------------------------- */
 .alignleft {
-
-	/*rtl:ignore*/
 	float: left;
-
-	/*rtl:ignore*/
 	margin-right: 1.5em;
 	margin-bottom: 1.5em;
 }
 
 .alignright {
-
-	/*rtl:ignore*/
 	float: right;
-
-	/*rtl:ignore*/
 	margin-left: 1.5em;
 	margin-bottom: 1.5em;
 }
@@ -952,13 +955,20 @@ textarea {
 .aligncenter {
 	clear: both;
 	display: block;
-	margin-left: auto;
 	margin-right: auto;
+	margin-left: auto;
 	margin-bottom: 1.5em;
 }
 
 
-
+.size-auto, 
+.size-full,
+.size-large,
+.size-medium,
+.size-thumbnail {
+	max-width: 100%;
+	height: auto;
+}
 
 .single-post .post {
     background: transparent;
@@ -1276,6 +1286,19 @@ table.shop_table_responsive tr td .coupon {
 
 .woocommerce-form-login label.woocommerce-form__label.woocommerce-form__label-for-checkbox.woocommerce-form-login__rememberme {
    margin-top: 12px;
+}
+
+div#customer_login {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+p.woocommerce-form-row.woocommerce-form-row--wide.form-row.form-row-wide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+p.woocommerce-form-row.woocommerce-form-row--wide.form-row.form-row-wide input {
+    width: 100%;
 }
 
 @media (min-width: 768px){

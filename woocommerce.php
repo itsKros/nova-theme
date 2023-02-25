@@ -17,13 +17,9 @@ get_header();
 
 <div class="container py-5">
 	<div class="row">
-
 		<div class="col-md-12 main"> 
-			
 			<main id="primary">
-
 				<?php woocommerce_content(); ?>
-
 			</main><!-- #main -->
 		</div><!-- .col-md-9 -->
     </div> <!-- .row -->

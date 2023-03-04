@@ -3,12 +3,12 @@
 function nova_theme_import_files() {
   return [
     [
-      'import_file_name'           => 'Fiscal',
-      'categories'                 => ['Finance'],
-      'import_file_url'            => 'https://novalanding.ssquarestech.com/demo1/layout/demo1-content.xml',
-      'import_customizer_file_url' => 'https://novalanding.ssquarestech.com/demo1/layout/demo1-customizer.dat',
-      'import_preview_image_url'   => 'https://novalanding.ssquarestech.com/demo1/layout/demo1-fiscal.png',
-      'preview_url'                => 'https://novalanding.ssquarestech.com/demo1',
+      'import_file_name'           => 'Kids Wear',
+      'categories'                 => ['Kids Wear'],
+      'import_file_url'            => 'https://novalanding.ssquarestech.com/kidswear/layout/demo-0-kidswear-content.xml',
+      'import_customizer_file_url' => 'https://novalanding.ssquarestech.com/kidswear/layout/demo-0-kidswear-customizer.dat',
+      'import_preview_image_url'   => 'https://novalanding.ssquarestech.com/kidswear/layout/demo-0-kidswear.png',
+      'preview_url'                => 'https://novalanding.ssquarestech.com/kidswear',
     ],
     [
       'import_file_name'           => 'NFT Marketplace',
@@ -88,6 +88,89 @@ function nova_theme_import_files() {
   ];
 }
 add_filter( 'ocdi/import_files', 'nova_theme_import_files' );
+
+
+function ocdi_register_plugins( $plugins ) {
+ 
+  // Required: List of plugins used by all theme demos.
+  $theme_plugins = [
+    [ 
+      'name'      => 'Elementor',
+			'slug'      => 'elementor',
+			'required'  => true,
+    ],
+    [ 
+      'name'               => 'Elementor Pro',
+			'slug'               => 'elementor-pro',
+			'source'             => get_stylesheet_directory() . '/inc/lib/plugins/elementor-pro.zip', 
+			'required'           => true,
+    ],
+    [ 
+      'name'      => 'Contact Form 7',
+			'slug'      => 'contact-form-7',
+			'required'  => true,
+    ],
+    [
+			'name'      => 'WooCommerce',
+			'slug'      => 'woocommerce',
+			'required'  => true,
+		],
+		[
+			'name'      => 'Yoast SEO',
+			'slug'      => 'wordpress-seo',
+			'required'  => false,
+		],
+		[
+			'name'      => 'Yoast Duplicate Post',
+			'slug'      => 'duplicate-post',
+			'required'  => false,
+		],
+		[
+			'name'      => 'Customizer Export/Import',
+			'slug'      => 'customizer-export-import',
+			'required'  => true,
+		],
+		[
+			'name'      => 'Style Kits – Advanced Theme Styles for Elementor',
+			'slug'      => 'analogwp-templates',
+			'required'  => true,
+		]
+  ];
+ 
+  // Check if user is on the theme recommeneded plugins step and a demo was selected.
+  if ( isset( $_GET['step'] ) && $_GET['step'] === 'import' && isset( $_GET['import'] )   ) 
+  {
+ 
+    // for kidswear Demo
+    if ( $_GET['import'] === '0' ) {
+      $theme_plugins[] = [
+        'name'     => 'Advanced Product Search For WooCommerce',
+        'slug'     => 'advanced-product-search-for-woo',
+        'required' => true,
+      ];
+ 
+      $theme_plugins[] = [
+        'name'     => 'Essential Addons for Elementor',
+        'slug'     => 'essential-addons-for-elementor-lite',
+        'required' => true,
+      ];
+
+      $theme_plugins[] = [
+        'name'     => 'Premium Addons for Elementor',
+        'slug'     => 'premium-addons-for-elementor',
+        'required' => true,
+      ];      
+    }
+ 
+    
+  }
+ 
+  return array_merge( $plugins, $theme_plugins );
+}
+add_filter( 'ocdi/register_plugins', 'ocdi_register_plugins' );
+
+
+
 
 
 function ocdi_after_import_setup() {

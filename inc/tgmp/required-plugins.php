@@ -58,79 +58,11 @@ function nova_theme_register_required_plugins() {
 	 * If the source is NOT from the .org repo, then source is also required.
 	 */
 	$plugins = array(
-
-		array(
-			'name'      => 'Elementor',
-			'slug'      => 'elementor',
-			'required'  => true,
-		),
-
-		array(
-			'name'               => 'Elementor Pro',
-			'slug'               => 'elementor-pro',
-			'source'             => get_stylesheet_directory() . '/inc/lib/plugins/elementor-pro.zip', 
-			'required'           => true,
-			'version'            => '3.11.2',
-			'force_activation'   => false,
-			'force_deactivation' => false,
-		),
-
-		array(
-			'name'      => 'Contact Form 7',
-			'slug'      => 'contact-form-7',
-			'required'  => true,
-		),
-
-		array(
-			'name'      => 'WooCommerce',
-			'slug'      => 'woocommerce',
-			'required'  => true,
-		),
-
-		array(
-			'name'      => 'Elements Kit Lite',
-			'slug'      => 'elementskit-lite',
-			'required'  => true,
-		),
-
-		array(
-			'name'      => 'Yoast SEO',
-			'slug'      => 'wordpress-seo',
-			'required'  => false,
-		),
-
-		array(
-			'name'      => 'Yoast Duplicate Post',
-			'slug'      => 'duplicate-post',
-			'required'  => false,
-		),
-
 		array(
 			'name'      => 'One Click Demo Import',
 			'slug'      => 'one-click-demo-import',
 			'required'  => true,
-		),
-
-		array(
-			'name'      => 'Customizer Export/Import',
-			'slug'      => 'customizer-export-import',
-			'required'  => true,
-		),
-
-		array(
-			'name'      => 'Fullwidth Page Templates',
-			'slug'      => 'fullwidth-templates',
-			'required'  => true,
-		),
-
-		array(
-			'name'      => 'Style Kits – Advanced Theme Styles for Elementor',
-			'slug'      => 'analogwp-templates',
-			'required'  => true,
 		)
-
-		
-
 	);
 
 	/*

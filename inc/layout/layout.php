@@ -91,6 +91,7 @@ add_filter( 'ocdi/import_files', 'nova_theme_import_files' );
 
 
 function ocdi_register_plugins( $plugins ) {
+<<<<<<< HEAD
  
   // Required: List of plugins used by all theme demos.
   $theme_plugins = [
@@ -111,25 +112,76 @@ function ocdi_register_plugins( $plugins ) {
 			'required'  => true,
     ],
     [
+=======
+
+
+  // Required: List of plugins used by all theme demos.
+  $theme_plugins = [
+    [
+			'name'      => 'Elementor',
+			'slug'      => 'elementor',
+			'required'  => true,
+		],
+
+		[
+			'name'               => 'Elementor Pro',
+			'slug'               => 'elementor-pro',
+			'source'             => get_stylesheet_directory() . '/inc/lib/plugins/elementor-pro.zip', 
+			'required'           => true,
+			'version'            => '3.11.2',
+			'force_activation'   => false,
+			'force_deactivation' => false,
+		],
+
+		[
+			'name'      => 'Contact Form 7',
+			'slug'      => 'contact-form-7',
+			'required'  => true,
+		],
+
+		[
+>>>>>>> 9a76774615bda10a31f5f69e5f11b575f3bc43a8
 			'name'      => 'WooCommerce',
 			'slug'      => 'woocommerce',
 			'required'  => true,
 		],
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9a76774615bda10a31f5f69e5f11b575f3bc43a8
 		[
 			'name'      => 'Yoast SEO',
 			'slug'      => 'wordpress-seo',
 			'required'  => false,
 		],
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9a76774615bda10a31f5f69e5f11b575f3bc43a8
 		[
 			'name'      => 'Yoast Duplicate Post',
 			'slug'      => 'duplicate-post',
 			'required'  => false,
 		],
+<<<<<<< HEAD
+=======
+
+		[
+			'name'      => 'One Click Demo Import',
+			'slug'      => 'one-click-demo-import',
+			'required'  => true,
+		],
+
+>>>>>>> 9a76774615bda10a31f5f69e5f11b575f3bc43a8
 		[
 			'name'      => 'Customizer Export/Import',
 			'slug'      => 'customizer-export-import',
 			'required'  => true,
 		],
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9a76774615bda10a31f5f69e5f11b575f3bc43a8
 		[
 			'name'      => 'Style Kits – Advanced Theme Styles for Elementor',
 			'slug'      => 'analogwp-templates',
@@ -137,6 +189,7 @@ function ocdi_register_plugins( $plugins ) {
 		]
   ];
  
+<<<<<<< HEAD
   // Check if user is on the theme recommeneded plugins step and a demo was selected.
   if ( isset( $_GET['step'] ) && $_GET['step'] === 'import' && isset( $_GET['import'] )   ) 
   {
@@ -150,16 +203,36 @@ function ocdi_register_plugins( $plugins ) {
       ];
  
       $theme_plugins[] = [
+=======
+   // Check if user is on the theme recommeneded plugins step and a demo was selected.
+  if (
+    isset( $_GET['step'] ) &&
+    $_GET['step'] === 'import' &&
+    isset( $_GET['import'] )
+  ) {
+ 
+    // Adding one additional plugin for the first demo import ('import' number = 0).
+    if ( $_GET['import'] === '0' ) {
+      $theme_plugins[] = [
+>>>>>>> 9a76774615bda10a31f5f69e5f11b575f3bc43a8
         'name'     => 'Essential Addons for Elementor',
         'slug'     => 'essential-addons-for-elementor-lite',
         'required' => true,
       ];
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> 9a76774615bda10a31f5f69e5f11b575f3bc43a8
       $theme_plugins[] = [
         'name'     => 'Premium Addons for Elementor',
         'slug'     => 'premium-addons-for-elementor',
         'required' => true,
+<<<<<<< HEAD
       ];      
+=======
+      ];
+>>>>>>> 9a76774615bda10a31f5f69e5f11b575f3bc43a8
     }
  
     
@@ -172,7 +245,10 @@ add_filter( 'ocdi/register_plugins', 'ocdi_register_plugins' );
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9a76774615bda10a31f5f69e5f11b575f3bc43a8
 function ocdi_after_import_setup() {
   // Assign menus to their locations.
   $main_menu = get_term_by( 'name', 'Main Menu', 'nav_menu' );

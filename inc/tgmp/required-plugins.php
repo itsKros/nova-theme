@@ -58,11 +58,75 @@ function nova_theme_register_required_plugins() {
 	 * If the source is NOT from the .org repo, then source is also required.
 	 */
 	$plugins = array(
+<<<<<<< HEAD
 		array(
 			'name'      => 'One Click Demo Import',
 			'slug'      => 'one-click-demo-import',
 			'required'  => true,
 		)
+=======
+
+		[
+			'name'      => 'Elementor',
+			'slug'      => 'elementor',
+			'required'  => true,
+		],
+
+		[
+			'name'               => 'Elementor Pro',
+			'slug'               => 'elementor-pro',
+			'source'             => get_stylesheet_directory() . '/inc/lib/plugins/elementor-pro.zip', 
+			'required'           => true,
+			'version'            => '3.11.2',
+			'force_activation'   => false,
+			'force_deactivation' => false,
+		],
+
+		[
+			'name'      => 'Contact Form 7',
+			'slug'      => 'contact-form-7',
+			'required'  => true,
+		],
+
+		[
+			'name'      => 'WooCommerce',
+			'slug'      => 'woocommerce',
+			'required'  => true,
+		],
+
+		[
+			'name'      => 'Yoast SEO',
+			'slug'      => 'wordpress-seo',
+			'required'  => false,
+		],
+
+		[
+			'name'      => 'Yoast Duplicate Post',
+			'slug'      => 'duplicate-post',
+			'required'  => false,
+		],
+
+		[
+			'name'      => 'One Click Demo Import',
+			'slug'      => 'one-click-demo-import',
+			'required'  => true,
+		],
+
+		[
+			'name'      => 'Customizer Export/Import',
+			'slug'      => 'customizer-export-import',
+			'required'  => true,
+		],
+
+		[
+			'name'      => 'Style Kits – Advanced Theme Styles for Elementor',
+			'slug'      => 'analogwp-templates',
+			'required'  => true,
+		]
+
+		
+
+>>>>>>> 9a76774615bda10a31f5f69e5f11b575f3bc43a8
 	);
 
 	/*

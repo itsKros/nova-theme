@@ -23,7 +23,9 @@ function um_remove_custom_css(){
 }
 add_action( 'wp_head' , 'um_remove_custom_css' , 1 );
 
-class NovaTheme {
+
+
+class NovaThemeEcommerce {
 	public $plugin_file=__FILE__;
 	public $responseObj;
 	public $licenseMessage;
@@ -31,52 +33,53 @@ class NovaTheme {
 	public $slug="nova-theme";
 	function __construct() {
 		add_action( 'admin_print_styles', [ $this, 'SetAdminStyle' ] );
-		$licenseKey=get_option("NovaTheme_lic_Key","");
-		$liceEmail=get_option( "NovaTheme_lic_email","");
+		$licenseKey=get_option("NovaThemeEcommerce_lic_Key","");
+		$liceEmail=get_option( "NovaThemeEcommerce_lic_email","");
 		$templateDir=get_stylesheet_directory(); //or dirname(__FILE__);
-		if(NovaThemeBase::CheckWPPlugin($licenseKey,$liceEmail,$this->licenseMessage,$this->responseObj,$templateDir."/style.css")){
+		if(NovaThemeEcommerceBase::CheckWPPlugin($licenseKey,$liceEmail,$this->licenseMessage,$this->responseObj,$templateDir."/style.css")){
 			add_action( 'admin_menu', [$this,'ActiveAdminMenu'],99999);
-			add_action( 'admin_post_NovaTheme_el_deactivate_license', [ $this, 'action_deactivate_license' ] );
+			add_action( 'admin_post_NovaThemeEcommerce_el_deactivate_license', [ $this, 'action_deactivate_license' ] );
 			//$this->licenselMessage=$this->mess;
 			require get_template_directory() . '/inc/tgmp/required-plugins.php';
             require get_template_directory() . '/inc/layout/layout.php';
-        }else{
+
+		}else{
 			if(!empty($licenseKey) && !empty($this->licenseMessage)){
 				$this->showMessage=true;
 			}
-			update_option("NovaTheme_lic_Key","") || add_option("NovaTheme_lic_Key","");
-			add_action( 'admin_post_NovaTheme_el_activate_license', [ $this, 'action_activate_license' ] );
+			update_option("NovaThemeEcommerce_lic_Key","") || add_option("NovaThemeEcommerce_lic_Key","");
+			add_action( 'admin_post_NovaThemeEcommerce_el_activate_license', [ $this, 'action_activate_license' ] );
 			add_action( 'admin_menu', [$this,'InactiveMenu']);
 		}
         }
 	function SetAdminStyle() {
-		wp_register_style( "NovaThemeLic", get_theme_file_uri("_lic_style.css"),10);
-		wp_enqueue_style( "NovaThemeLic" );
+		wp_register_style( "NovaThemeEcommerceLic", get_theme_file_uri("_lic_style.css"),10);
+		wp_enqueue_style( "NovaThemeEcommerceLic" );
 	}
 	function ActiveAdminMenu(){
 		 
-		add_menu_page (  "NovaTheme", "Nova Theme", "activate_plugins", $this->slug, [$this,"Activated"], " dashicons-star-filled ");
-		//add_submenu_page(  $this->slug, "NovaTheme License", "License Info", "activate_plugins",  $this->slug."_license", [$this,"Activated"] );
+		add_menu_page (  "NovaThemeEcommerce", "Nova Theme Ecommerce", "activate_plugins", $this->slug, [$this,"Activated"], " dashicons-star-filled ");
+		//add_submenu_page(  $this->slug, "NovaThemeEcommerce License", "License Info", "activate_plugins",  $this->slug."_license", [$this,"Activated"] );
 
 	}
 	function InactiveMenu() {
-		add_menu_page( "NovaTheme", "Nova Theme", 'activate_plugins', $this->slug,  [$this,"LicenseForm"], " dashicons-star-filled " );
+		add_menu_page( "NovaThemeEcommerce", "Nova Theme Ecommerce", 'activate_plugins', $this->slug,  [$this,"LicenseForm"], " dashicons-star-filled " );
 		
 	}
 	function action_activate_license(){
 		check_admin_referer( 'el-license' );
 		$licenseKey=!empty($_POST['el_license_key'])?$_POST['el_license_key']:"";
 		$licenseEmail=!empty($_POST['el_license_email'])?$_POST['el_license_email']:"";
-		update_option("NovaTheme_lic_Key",$licenseKey) || add_option("NovaTheme_lic_Key",$licenseKey);
-		update_option("NovaTheme_lic_email",$licenseEmail) || add_option("NovaTheme_lic_email",$licenseEmail);
+		update_option("NovaThemeEcommerce_lic_Key",$licenseKey) || add_option("NovaThemeEcommerce_lic_Key",$licenseKey);
+		update_option("NovaThemeEcommerce_lic_email",$licenseEmail) || add_option("NovaThemeEcommerce_lic_email",$licenseEmail);
 		update_option('_site_transient_update_themes','');
 		wp_safe_redirect(admin_url( 'admin.php?page='.$this->slug));
 	}
 	function action_deactivate_license() {
 		check_admin_referer( 'el-license' );
 		$message="";
-		if(NovaThemeBase::RemoveLicenseKey(__FILE__,$message)){
-			update_option("NovaTheme_lic_Key","") || add_option("NovaTheme_lic_Key","");
+		if(NovaThemeEcommerceBase::RemoveLicenseKey(__FILE__,$message)){
+			update_option("NovaThemeEcommerce_lic_Key","") || add_option("NovaThemeEcommerce_lic_Key","");
 			update_option('_site_transient_update_themes','');
 		}
     	wp_safe_redirect(admin_url( 'admin.php?page='.$this->slug));
@@ -84,9 +87,9 @@ class NovaTheme {
 	function Activated(){
 		?>
         <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-            <input type="hidden" name="action" value="NovaTheme_el_deactivate_license"/>
+            <input type="hidden" name="action" value="NovaThemeEcommerce_el_deactivate_license"/>
             <div class="el-license-container">
-                <h3 class="el-license-title"><i class="dashicons-before dashicons-star-filled"></i> <?php _e("Nova Theme License Info",$this->slug);?> </h3>
+                <h3 class="el-license-title"><i class="dashicons-before dashicons-star-filled"></i> <?php _e("Nova Theme Ecommerce License Info",$this->slug);?> </h3>
                 <hr>
                 <ul class="el-license-info">
                 <li>
@@ -153,9 +156,9 @@ class NovaTheme {
 	function LicenseForm() {
 		?>
         <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-            <input type="hidden" name="action" value="NovaTheme_el_activate_license"/>
+            <input type="hidden" name="action" value="NovaThemeEcommerce_el_activate_license"/>
             <div class="el-license-container">
-                <h3 class="el-license-title"><i class="dashicons-before dashicons-star-filled"></i> <?php _e("Nova Theme Theme Licensing",$this->slug);?></h3>
+                <h3 class="el-license-title"><i class="dashicons-before dashicons-star-filled"></i> <?php _e("Nova Theme Ecommerce Theme Licensing",$this->slug);?></h3>
                 <hr>
 				<?php
 					if(!empty($this->showMessage) && !empty($this->licenseMessage)){
@@ -168,8 +171,10 @@ class NovaTheme {
 				?>
                 <p><?php _e("Enter your license key here, to activate the product, and get full feature updates and premium support.",$this->slug);?></p>
 <ol>
-    <li><?php _e("Please enter your license key.",$this->slug);?></li>
-    <li><?php _e("You will get your license keyfrom your account section in Nova Theme official site",$this->slug);?></li>
+    <li><?php _e("Write your licnese key details",$this->slug);?></li>
+    <li><?php _e("How buyer will get this license key?",$this->slug);?></li>
+    <li><?php _e("Describe other info about licensing if required",$this->slug);?></li>
+    <li>. ...</li>
 </ol>
     		    <div class="el-license-field">
     			    <label for="el_license_key"><?php _e("License code",$this->slug);?></label>
@@ -178,7 +183,7 @@ class NovaTheme {
                 <div class="el-license-field">
                     <label for="el_license_key"><?php _e("Email Address",$this->slug);?></label>
                     <?php
-                        $purchaseEmail   = get_option( "NovaTheme_lic_email", get_bloginfo( 'admin_email' ));
+                        $purchaseEmail   = get_option( "NovaThemeEcommerce_lic_email", get_bloginfo( 'admin_email' ));
                     ?>
                     <input type="text" class="regular-text code" name="el_license_email" size="50" value="<?php echo $purchaseEmail; ?>" placeholder="" required="required">
                     <div><small><?php _e("We will send update news of this product by this email address, don't worry, we hate spam",$this->slug);?></small></div>
@@ -193,7 +198,7 @@ class NovaTheme {
 	}
 }
 
-new NovaTheme();
+new NovaThemeEcommerce();
 
 
 if ( ! defined( '_S_VERSION' ) ) {

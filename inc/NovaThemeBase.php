@@ -1,12 +1,12 @@
 <?php
-if(!class_exists("NovaThemeBase")) {
-	class NovaThemeBase {
-    	public $key = "34883F8448F80110";
+if(!class_exists("NovaThemeEcommerceBase")) {
+	class NovaThemeEcommerceBase {
+    	public $key = "F2299113651E9038";
     	private $product_id = "1";
     	private $product_base = "nova-theme";
     	private $server_host = "https://novalanding.ssquarestech.com/wp-json/licensor/";
     	private $hasCheckUpdate=true;
-    	private $isEncryptUpdate=true;
+    	private $isEncryptUpdate=false;
     	private $pluginFile;
         private static $selfobj=null;
         private $version="";

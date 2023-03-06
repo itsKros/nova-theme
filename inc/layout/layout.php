@@ -5,9 +5,9 @@ function nova_theme_import_files() {
     [
       'import_file_name'           => 'Kids Wear',
       'categories'                 => ['Kids Wear'],
-      'import_file_url'            => 'https://kidsweardemo.ssquarestech.com/kidswear/layout/demo-0-kidswear-content.xml',
-      'import_customizer_file_url' => 'https://kidsweardemo.ssquarestech.com/kidswear/layout/demo-0-kidswear-customizer.dat',
-      'import_preview_image_url'   => 'https://kidsweardemo.ssquarestech.com/kidswear/layout/demo-0-kidswear.png',
+      'import_file_url'            => 'https://kidsweardemo.ssquarestech.com/layout/demo-0-kidswear-content.xml',
+      'import_customizer_file_url' => 'https://kidsweardemo.ssquarestech.com/layout/demo-0-kidswear-customizer.dat',
+      'import_preview_image_url'   => 'https://kidsweardemo.ssquarestech.com/layout/demo-0-kidswear.png',
       'preview_url'                => 'https://kidsweardemo.ssquarestech.com',
     ],
     [
